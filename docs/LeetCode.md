@@ -1,3 +1,19 @@
+[1. Two Sum (Easy)](https://leetcode.com/problems/two-sum/)  
+1. 暴力双循环 i->(0~n-1)，j->(i+1~n-1)，O(n×(n−1))≈O(n^2 )  
+2. 使用map循环一次  i->(0~n-1) target-nums[i] 是否在map key中 不在存入(nums[i],i) 在返回{map.get差值，i}
+
+[2. Add Two Numbers (Medium)](https://leetcode.com/problems/add-two-numbers/)   
+结果链表头设0  
+中间链表=结果链表头  
+加法器实现，每位输出用中间链表链表存，进位用int存储    
+不为Null取value，为Null设为0，和加上进位，输出取除10余，进位除10（链表先设置next，然后等于next）  
+不为Null的取next  
+返回结果链表的next
+
+[20. Valie Parentheses (Easy)](https://leetcode.com/problems/valid-parentheses/) 
+1. 字典右对左，存左比较左
+2. 字典左对右，存右比较右 
+
 [64. Minium Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/)
 
 ```html
