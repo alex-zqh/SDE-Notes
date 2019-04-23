@@ -1,21 +1,15 @@
 ## **1.硬币找零**
 使用m种硬币，凑某个数量最少硬币。
-```java
+```python
 //sum是对应数量
 //a是m种硬币的列表
-int[] dp = new int[sum+1];
-dp[0] = 0;
-for(int i=1;i<=sum;i++)
-    dp[i] = i;
-for(int i=1;i<sum;i++){
-    for(int j=0;j<m;j++)
-    {
-        if(i>a[j]&&dp[i-a[j]]+1<dp[i]){
-            dp[i] = dp[i-a[j]]+1;
-        }
-    }
-}
-return dp[sum];
+dp = []
+for i in range(sum+1):
+    dp.append(i)
+for i in range(1,sum+1):
+    for j in range(m):
+        if i>a[j] and dp[i-a[j]]+1<dp[i]:
+            dp[i] = dp[i-a[j]]+1
 ```
 ## 1.1.走方格
 m&times;n大小的格子，从左上到右下。
@@ -24,19 +18,16 @@ m&times;n大小的格子，从左上到右下。
  
 **解题思路**  
 先计算边界值（0行0列），情况1是值叠加（由于只能向右或者向下走），情况2都是1。后用动态规划递推公式，**dp[i][j]=Math.max/Math.min (dp[i-1][j],dp[i][j-1])**，最后返回dp[m-1][n-1].
-```java
-int[][] dp = new int[m][n]
-int i=0,j=0;
+```python
+dp = [[0] * n for i in range(m)]
 dp[0][0] = grid[0][0]
-for(i=1;i<m;i++)
-    dp[i][0] = dp[i-1][0]+grid[i][0];
-for(j=1;j<n;i++)
-    dp[0][j] = dp[0][j-1]+grid[0][j];
-for(i=1;i<n;i++){
-    for(j=1;j<n;i++){
-        dp[i][j] = Math.max/Math.min(dp[i-1][j],dp[i][j-1]) + grid[i][j];
-    }
-}
+for i in range(1,m):
+    dp[i][0] = dp[i-1][0]+grid[i][0]
+for j in range(1,n):
+    dp[0][j] = dp[0][j-1]+grid[0][j]
+for i in range(1,m):
+    for j in range(1,n):
+        dp[i][j] = max/min(dp[i-1][j],dp[i][j-1])+grid[i][j]
 return dp[m-1][n-1]
 ```
 LeetCode: [64. Minium Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/)  
