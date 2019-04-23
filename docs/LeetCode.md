@@ -48,7 +48,148 @@ public class Solution_64 {
         return dp[m-1][n-1];
     }
 }
+```
+[72. Edit Distance (Medium)](https://leetcode.com/problems/edit-distance/)
+```html
+Input: word1 = "horse", word2 = "ros"
+Output: 3
+Explanation: 
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')
+```
+```html
+Input: word1 = "intention", word2 = "execution"
+Output: 5
+Explanation: 
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u')
+```
+```java
+public class Solution_72 {
+    public int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int[][] dp = new int[m+1][n+1];
+        int i=0,j=0;
+        for(i=0;i<=m;i++){
+            dp[i][0] = i;
+        }
+        for(j=1;i<=n;j++){
+            dp[0][j] = j;
+        }
+        for(i=1;i<=m;i++){
+            for(j=1;j<=n;j++){
+                if(word1.charAt(i-1) == word2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j]+dp[i][j-1];
+                }
+                else{
+                    int delete = dp[i-1][j]+1;
+                    int insert = dp[i][j-1]+1;
+                    int replace = dp[i-1][j-1]+1;
+                    int min = Math.min(delete,insert);
+                    dp[i][j] = Math.min(min,replace);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+}
+```
+[152. Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)
+```html
+Input: [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+```
+```html
+Input: [-2,0,-1]
+Output: 0
+Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+```
+```java
+public class Solution_152 {
+    public int maxProduct(int[] nums) {
+        int dp = 0;
+        int i,maxm,minm;
+        dp = maxm = minm = nums[0];
+        for(i=1;i<nums.length;i++){
+            if(nums[i]>=0){
+               maxm = Math.max(maxm*nums[i],nums[i]);
+               minm = Math.min(minm*nums[i],nums[i]);
+            }
+            else{
+                int tmp;
+                tmp = maxm;
+                maxm = Math.max(minm*nums[i],nums[i]);
+                minm = Math.min(maxm*nums[i],nums[i]);
+            }
+            dp = Math.max(dp,maxm);
+        }
+        return dp;
+    }
+}
+```
 
+[300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
+```html
+Input: [10,9,2,5,3,7,101,18]
+Output: 4 
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. 
+```
+```java
+class Solution_300 {
+    public int lengthOfLIS(int[] nums,int n) {
+        if(nums == null || n ==0)
+            return 0;
+        int max = 1;
+        int[] dp = new int[n];
+        dp[0] = 1;
+        for(int i=1;i<n;i++){
+            dp[i] = 1;
+            for(int j=0;j<i;j++){
+                if(nums[i] > nums[j] && dp[i]<dp[j]+1){
+                    dp[i] = dp[j]+1;
+                }
+            }
+            if(dp[i] > max){
+                max = dp[i];
+            }
+        }
+        return max;
+    }
+
+    public int[] findLIS(int[] nums,int n){
+        ArrayList<Integer> list = new ArrayList<>();
+        int[] dp = new int[n];
+        int max = 1;
+        dp[0] = 1;
+        for(int i=1;i<n;i++) {
+            ArrayList<Integer> now = new ArrayList<>();
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i] && dp[i] < dp[j] + 1) {
+                    dp[i] = dp[j] + 1;
+                    now.add(nums[j]);
+                }
+            }
+            now.add(nums[i]);
+            if(dp[i]>max){
+                list = now;
+            }
+        }
+        int[] res = new int[list.size()];
+        for(int i=0;i<list.size();i++){
+            res[i] = list.get(i);
+            System.out.print(res[i]+" ");
+        }
+        System.out.println();
+        return res;
+    }
+}
 ```
 
 [394. Decode String (Medium)](https://leetcode.com/problems/decode-string/)
@@ -60,12 +201,7 @@ s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
 ```
 ```java
 public class Solution_394 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String s = sc.next();
-        System.out.println(decodeString(s));
-    }
-    static String decodeString(String s){
+    public String decodeString(String s){
         Stack<Character> stack = new Stack<>();
         StringBuilder res = new  StringBuilder();
         StringBuilder repeat;
