@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <p><strong>F5 networks</strong><br>
+1、旋转数组中找出最小的</p>
+<pre><code class="language-java"><div><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minNumberInRotateArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span> [] array)</span> </span>{
+        <span class="hljs-keyword">if</span> (array.length ==<span class="hljs-number">0</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> h = array.length-<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span>(l &lt; h){
+            <span class="hljs-keyword">int</span> m = l+(h-l)/<span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span>(array[m]&lt;=array[h])
+                h = m;
+            <span class="hljs-keyword">else</span>
+                l = m+<span class="hljs-number">1</span>;
+        }
+        <span class="hljs-keyword">return</span> array[l];
+    }
+}
+</div></code></pre>
+<p>2、链表 两两交换位置</p>
+<pre><code class="language-java"><div><span class="hljs-comment">/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">swapPairs</span><span class="hljs-params">(ListNode head)</span> </span>{
+        ListNode node = <span class="hljs-keyword">new</span> ListNode(-<span class="hljs-number">1</span>);
+        node.next = head;
+        ListNode pre = node;
+        <span class="hljs-keyword">while</span>(pre.next!=<span class="hljs-keyword">null</span> &amp;&amp; pre.next.next!=<span class="hljs-keyword">null</span>){
+            ListNode l1 = pre.next;
+            ListNode l2 = pre.next.next;
+            l1.next = l2.next;
+            l2.next = l1;
+            pre.next = l2;
+            pre = l1;
+        }
+        <span class="hljs-keyword">return</span> node.next;
+    }
+}
+</div></code></pre>
+<p>3、1, 2, 3排序</p>
+<pre><code class="language-java"><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sortColors</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+        <span class="hljs-keyword">int</span> zero = -<span class="hljs-number">1</span>, one = <span class="hljs-number">0</span>, two = nums.length;
+        <span class="hljs-keyword">while</span> (one &lt; two) {
+            <span class="hljs-keyword">if</span> (nums[one] == <span class="hljs-number">0</span>) {
+                swap(nums, ++zero, one++);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[one] == <span class="hljs-number">2</span>) {
+                swap(nums, --two, one);
+            } <span class="hljs-keyword">else</span> {
+                ++one;
+            }
+        }   
+    }
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j)</span> </span>{
+        <span class="hljs-keyword">int</span> t = nums[i];
+        nums[i] = nums[j];
+        nums[j] = t;
+    }
+}
+</div></code></pre>
+<p>4、ls -l如何提高性能</p>
+<p>Stack<Node> stack = new Stack<Node>();<br>
+Node node = root;<br>
+while (node != null || stack.size() &gt; 0) {<br>
+if (node != null) {<br>
+stack.push(node);   //直接压栈<br>
+node = node.getLeftNode();<br>
+} else {<br>
+node = stack.pop(); //出栈并访问<br>
+printNode(node);<br>
+node = node.getRightNode();
+}<br>
+}</p>
+
+    </body>
+    </html>

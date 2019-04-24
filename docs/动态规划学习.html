@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>**1.硬币找零**</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h2 id="1%E7%A1%AC%E5%B8%81%E6%89%BE%E9%9B%B6"><strong>1.硬币找零</strong></h2>
+<p>使用m种硬币，凑某个数量最少硬币。</p>
+<pre><code class="language-java"><div><span class="hljs-comment">//sum是对应数量</span>
+<span class="hljs-comment">//a是m种硬币的列表</span>
+<span class="hljs-keyword">int</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[sum+<span class="hljs-number">1</span>];
+dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=sum;i++)
+    dp[i] = i;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;sum;i++){
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;m;j++)
+    {
+        <span class="hljs-keyword">if</span>(i&gt;a[j]&amp;&amp;dp[i-a[j]]+<span class="hljs-number">1</span>&lt;dp[i]){
+            dp[i] = dp[i-a[j]]+<span class="hljs-number">1</span>;
+        }
+    }
+}
+<span class="hljs-keyword">return</span> dp[sum];
+</div></code></pre>
+<h2 id="11%E8%B5%B0%E6%96%B9%E6%A0%BC">1.1.走方格</h2>
+<p>m×n大小的格子，从左上到右下。</p>
+<ol>
+<li>每个格子都有一个值，问走路的值最大/最小。</li>
+<li>没有值，问多少种走法。</li>
+</ol>
+<p><strong>解题思路</strong><br>
+先计算边界值（0行0列），情况1是值叠加（由于只能向右或者向下走），情况2都是1。后用动态规划递推公式，<strong>dp[i][j]=Math.max/Math.min (dp[i-1][j],dp[i][j-1])</strong>，最后返回dp[m-1][n-1].</p>
+<pre><code class="language-java"><div><span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m][n]
+<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>,j=<span class="hljs-number">0</span>;
+dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = grid[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]
+<span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;m;i++)
+    dp[i][<span class="hljs-number">0</span>] = dp[i-<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]+grid[i][<span class="hljs-number">0</span>];
+<span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;n;i++)
+    dp[<span class="hljs-number">0</span>][j] = dp[<span class="hljs-number">0</span>][j-<span class="hljs-number">1</span>]+grid[<span class="hljs-number">0</span>][j];
+<span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;n;i++){
+    <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;n;i++){
+        dp[i][j] = Math.max/Math.min(dp[i-<span class="hljs-number">1</span>][j],dp[i][j-<span class="hljs-number">1</span>]) + grid[i][j];
+    }
+}
+<span class="hljs-keyword">return</span> dp[m-<span class="hljs-number">1</span>][n-<span class="hljs-number">1</span>]
+</div></code></pre>
+<p>LeetCode: <a href="https://leetcode.com/problems/minimum-path-sum/">64. Minium Path Sum (Medium)</a><br>
+牛客网: <a href="https://www.nowcoder.com/questionTerminal/79b289947d854a759525dd937aa14762">方格走法</a></p>
+<h2 id="2%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB-edit-distance"><strong>2.字符串相似度/编辑距离 (edit distance)</strong></h2>
+<p>对于序列S和T，它们之间距离定义为：对二者其一进行几次以下的操作(1)删去一个字符；(2)插入一个字符；(3)改变一个字符。每进行一次操作，计数增加1。将S和T变为同一个字符串的最小计数即为它们的距离。给出相应算法。</p>
+<pre><code class="language-java"><div><span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m+<span class="hljs-number">1</span>][n+<span class="hljs-number">1</span>]
+<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>,j=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;=m;i++)
+    dp[i][<span class="hljs-number">0</span>] = i;
+<span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>;j&lt;=n;j++)
+    dp[<span class="hljs-number">0</span>][j] = j;
+<span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;m;i++){
+    <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;=n;j++){
+        <span class="hljs-keyword">if</span>(word1.charAt(i-<span class="hljs-number">1</span>) == word2.charAt(j-<span class="hljs-number">1</span>)){
+            dp[i][j] = dp[i-<span class="hljs-number">1</span>][j-<span class="hljs-number">1</span>];
+        }
+        <span class="hljs-keyword">else</span>{
+            <span class="hljs-keyword">int</span> replace = dp[i-<span class="hljs-number">1</span>][j-<span class="hljs-number">1</span>]+<span class="hljs-number">1</span>;
+            <span class="hljs-keyword">int</span> delete = dp[i-<span class="hljs-number">1</span>][j]+<span class="hljs-number">1</span>;
+            <span class="hljs-keyword">int</span> insert = dp[i][j-<span class="hljs-number">1</span>]+<span class="hljs-number">1</span>;
+            <span class="hljs-keyword">int</span> min = Math.min(relpace,delete);
+            dp[i][j] = Math.min(min,insert);
+        }
+    }
+}
+<span class="hljs-keyword">return</span> dp[m][n];
+</div></code></pre>
+<p>LeetCode: <a href="https://leetcode.com/problems/edit-distance/">72. Edit Distance (Hard)</a></p>
+<h2 id="3%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97-longest-common-substring"><strong>3.最长公共子序列 (Longest Common Substring)</strong></h2>
+<pre><code class="language-java"><div><span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m+<span class="hljs-number">1</span>][n+<span class="hljs-number">1</span>]
+StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();
+<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>,j=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;=m;i++)
+    dp[i][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>;j&lt;=n;j++)
+    dp[<span class="hljs-number">0</span>][j] = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;m;i++){
+    <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;=n;j++){
+        <span class="hljs-keyword">if</span>(word1.charAt(i-<span class="hljs-number">1</span>) == word2.charAt(j-<span class="hljs-number">1</span>)){
+            dp[i][j] = dp[i-<span class="hljs-number">1</span>][j-<span class="hljs-number">1</span>]+<span class="hljs-number">1</span>;
+            sb.add(word1.charAt(i-<span class="hljs-number">1</span>));
+        }
+        <span class="hljs-keyword">else</span>{
+            dp[i][j] = Math.max(dp[i-<span class="hljs-number">1</span>][j],dp[i][j-<span class="hljs-number">1</span>]);
+        }
+    }
+}
+<span class="hljs-keyword">return</span> dp[m][n];
+</div></code></pre>
+<h2 id="4%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97-longest-increasing-subsequence"><strong>4.最长递增子序列 (Longest Increasing Subsequence)</strong></h2>
+<pre><code class="language-java"><div><span class="hljs-keyword">int</span> max = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">int</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++){
+    dp[i] = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;i;j++){
+          <span class="hljs-keyword">if</span>(num[i] &gt; num[j] &amp;&amp; dp[i]&lt;dp[j]+<span class="hljs-number">1</span>){
+              dp[i] = dp[j]+<span class="hljs-number">1</span>;
+          }      
+    }
+    <span class="hljs-keyword">if</span>(dp[i] &gt; max){
+        max = dp[i];
+    }
+}   
+<span class="hljs-keyword">return</span> max;
+</div></code></pre>
+<pre><code class="language-java"><div>ArrayList&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+<span class="hljs-keyword">int</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+<span class="hljs-keyword">int</span> max = <span class="hljs-number">1</span>;
+dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++) {
+    ArrayList&lt;Integer&gt; now = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    dp[i] = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+        <span class="hljs-keyword">if</span> (nums[j] &lt; nums[i] &amp;&amp; dp[i] &lt; dp[j] + <span class="hljs-number">1</span>) {
+            dp[i] = dp[j] + <span class="hljs-number">1</span>;
+            now.add(nums[j]);
+        }
+    }
+    now.add(nums[i]);
+    <span class="hljs-keyword">if</span>(dp[i]&gt;max){
+        list = now;
+    }
+}
+<span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[list.size()];
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;list.size();i++){
+    res[i] = list.get(i);
+}
+<span class="hljs-keyword">return</span> res;
+</div></code></pre>
+<p>LeetCode: <a href="https://leetcode.com/problems/longest-increasing-subsequence/">300. Longest Increasing Subsequence</a></p>
+<h2 id="5%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97%E5%92%8C%E7%A7%AF-maximum-product"><strong>5.最大连续子序列和/积 (Maximum Product)</strong></h2>
+<pre><code class="language-java"><div><span class="hljs-keyword">int</span> max = Integer.MIN_VALUE;
+<span class="hljs-keyword">int</span> dp = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i:nums){
+    dp = Math.max(dp+i,i);
+    max = Math.max(max,dp);
+}
+<span class="hljs-keyword">return</span> max;
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">int</span> dp = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">int</span> i,maxm,minm;
+dp = maxm = minm = nums[<span class="hljs-number">0</span>];
+<span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;nums.length;i++){
+    <span class="hljs-keyword">if</span>(nums[i]&gt;=<span class="hljs-number">0</span>){
+        maxm = Math.max(maxm*nums[i],nums[i]);
+        minm = Math.min(minm*nums[i],nums[i]);
+    }
+    <span class="hljs-keyword">else</span>{
+        <span class="hljs-keyword">int</span> tmp;
+        tmp = maxm;
+        maxm = Math.max(minm*nums[i],nums[i]);
+        minm = Math.min(maxm*nums[i],nums[i]);
+        }
+        dp = Math.max(dp,maxm);
+}
+<span class="hljs-keyword">return</span> dp;
+</div></code></pre>
+<p>Leetcode: <a href="https://leetcode.com/problems/maximum-subarray/">53. Maximum Subarray</a><br>
+Leetcode: <a href="https://leetcode.com/problems/maximum-product-subarray/">152. Maximum Product Subarray</a></p>
+
+    </body>
+    </html>
