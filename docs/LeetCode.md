@@ -14,6 +14,37 @@
 1. 字典右对左，存左比较左
 2. 字典左对右，存右比较右 
 
+[24. Swap Nodes in Pairs (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/)
+```html
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+```
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode node = new ListNode(-1);
+        node.next = head;
+        ListNode pre = node;
+        while(pre.next!=null && pre.next.next!=null){
+            ListNode l1 = pre.next;
+            ListNode l2 = pre.next.next;
+            l1.next = l2.next;
+            l2.next = l1;
+            pre.next = l2;
+            pre = l1;
+        }
+        return node.next;
+    }
+}
+```
+
 [64. Minium Path Sum (Medium)](https://leetcode.com/problems/minimum-path-sum/)
 
 ```html
@@ -99,6 +130,33 @@ public class Solution_72 {
     }
 }
 ```
+[75. Sort Colors](https://leetcode.com/problems/sort-colors/)  
+```html
+Input: [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+```
+```java
+class Solution {
+    public void sortColors(int[] nums) {
+        int zero = -1, one = 0, two = nums.length;
+        while (one < two) {
+            if (nums[one] == 0) {
+                swap(nums, ++zero, one++);
+            } else if (nums[one] == 2) {
+                swap(nums, --two, one);
+            } else {
+                ++one;
+            }
+        }   
+    }
+    private void swap(int[] nums, int i, int j) {
+        int t = nums[i];
+        nums[i] = nums[j];
+        nums[j] = t;
+    }
+}
+```
+
 [152. Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)
 ```html
 Input: [2,3,-2,4]
