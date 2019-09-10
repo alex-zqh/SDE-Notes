@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>**Question # 1**</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h1 id="question--1"><strong>Question # 1</strong></h1>
+<p><strong>Question</strong>:</p>
+<p>There are N people in a group labeled from 1 to N. People are connected to each other via threads in the following manner:</p>
+<p>The person whith label number K is connected to all the person with label J that exactly divides K. Beads can be passed through the theads. If a person P has a bead, in how many ways can the bead be passed in the network of threads so that it returns to the same person within X moves or less?</p>
+<p><strong>MOVE</strong>:Passing the bead from one person to the other.</p>
+<p><strong>Input Specification:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> N, denoting the number of people<br>
+<strong>input2:</strong> P, label of person having the bead<br>
+<strong>input3</strong>: X,maximun number of movesthat can be made</p>
+</blockquote>
+<p><strong>Output Specification:</strong></p>
+<blockquote>
+<p>Your fuction should return the total nummber of ways in whicc the bead will return to its initial position within X moves.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 3<br>
+<strong>input2:</strong> 2<br>
+<strong>input3:</strong> 2</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 1</p>
+</blockquote>
+<p><strong>Explanation</strong>:<br>
+only 1 way:<br>
+2-&gt;1-&gt;2</p>
+<p><strong>Example 2:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 3<br>
+<strong>input2:</strong> 2<br>
+<strong>input3:</strong> 4</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 1</p>
+</blockquote>
+<p><strong>Explanation</strong>:<br>
+3 ways:<br>
+2-&gt;1-&gt;2<br>
+2-&gt;1-&gt;3-&gt;1-&gt;2<br>
+2-&gt;1-&gt;2-&gt;1-&gt;2</p>
+<h1 id="question--2"><strong>Question # 2</strong></h1>
+<p><strong>Question:</strong></p>
+<p>Ralph is a brilliant archer who always wins the archery competitions. This time to challenge him, the judges have set a new type of challenge.</p>
+<p>There are N bottles kept in a row tiwh each bottle given a specific number. Ralph has to target and hit the bottles in a very interesting way. In one shot, Ralph can remove 1 or more than 1 bottles such that the numbers present on these sequence of bottles form a palindrome. Also these bottles must be present one after the other. After taking this shot, the remaining bottles are shifted so that all the bottles are again in a row and Ralph shoot the bottles again.</p>
+<p>Now, if Ralph gets i point for each shot. dind the minmum number of points Ralph can score.</p>
+<p><strong>Input Specification:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> The number of bootles N.<br>
+<strong>input2:</strong> The array representing the number written on the bottles with A[i] representing the number on the i<sup>th</sup> bottle</p>
+</blockquote>
+<p><strong>Output Specification:</strong></p>
+<blockquote>
+<p>The minmun number of points Ralph can score.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 2<br>
+<strong>input2:</strong> {1,2}</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 2</p>
+</blockquote>
+<p><strong>Explanation</strong>:</p>
+<p><strong>Example 2:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 5<br>
+<strong>input2:</strong> {1,4,3,1,5}</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 3</p>
+</blockquote>
+<p><strong>Explanation:</strong></p>
+<h1 id="question--3"><strong>Question # 3</strong></h1>
+<p><strong>Question:</strong></p>
+<p>At the ticket counter of a movie theater, N poeple labeled from 1 to N are initally standing in a queue, such that the first person in the front of the queue is 1.</p>
+<p>The following events are taking place at any given time:<br>
+E1: The person standing in the front of the queue gets the ticket and moves out.<br>
+E2: The person X gets annoyed standing in the queue and moves out of the queue.</p>
+<p>The following query needs to be answered:<br>
+E3: At the given time, what is the position of the person X?</p>
+<p><strong>Input Specification:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> N, the number of people initially standing in the queue<br>
+<strong>input2:</strong> Q, the number of queries<br>
+<strong>input3:</strong> An array of Q elements, each having the following elements:E, X.<br>
+if E=1, then event E1 occurs (Assume the value of X to be 0 with this event)<br>
+if E=2, then event E2 occurs.<br>
+if E=3, you need to find the position of the person X.</p>
+</blockquote>
+<p><strong>Output Specification:</strong></p>
+<blockquote>
+<p>Your function should return the number which is the sum of all the E3 queries.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 5<br>
+<strong>input2:</strong> 1<br>
+<strong>input3:</strong> {{1,0}}</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 0</p>
+</blockquote>
+<p><strong>Explanation</strong>:</p>
+<p><strong>Example 2:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 5<br>
+<strong>input2:</strong> 3<br>
+<strong>input2:</strong> {{1,0},{3,3},{2,2}}</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 2</p>
+</blockquote>
+<p><strong>Explanation:</strong></p>
+<h1 id="question--4"><strong>Question # 4</strong></h1>
+<p><strong>Question:</strong></p>
+<p>Congratulations! You have been born as a honey bee. The good part is that you do not have to study. The bad part is that you have to work all day, every day to clooect honey. You live in a honeyhome (not Honeycomb).</p>
+<p>You have to collect honey from various flowers daily and submit it to various honeycombs spread across the area and return home by a specific time. Your task is to collect as much honey as possible by a sprcific time. Your task is to clooect as much honey as possible by the allocated time and submit it to the honeycombs.</p>
+<p>Each flower has 1 unit of honey and you can only carry 1 unit of honey at a time.<br>
+Also, covering 1 unit distance requires 1 unit of time. Distance is calculated using Ruclidean distance formula.</p>
+<p>Find out the maximum units of honey you can collect.</p>
+<p><strong>Input Specification:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> Number of flowers.<br>
+<strong>input2:</strong> Number of honeycombs.<br>
+<strong>input3:</strong> A 2D array representing the coordinates of each flower.<br>
+<strong>input4:</strong> A 2D array representing the coordinates of each honeycomb.<br>
+<strong>input5:</strong> Array constaining Source coordinates.<br>
+<strong>input6:</strong> Time period.</p>
+</blockquote>
+<p><strong>Output Specification:</strong></p>
+<blockquote>
+<p>Your function must return the maximum units of honey collected.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 2<br>
+<strong>input2:</strong> 2<br>
+<strong>input3:</strong> {{3,3},{4,6}}<br>
+<strong>input4:</strong> {{5,5},{6,1}}<br>
+<strong>input5:</strong> {1,4}<br>
+<strong>input6:</strong> 13</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 2</p>
+</blockquote>
+<p><strong>Explanation</strong>:<br>
+You will first go to the flower at {3,3} with distance sqrt(5) and then to honeycomb at {5,5} with distance sqrt(8) and then to flower at {4,6} and to honeycomb at {5,5} and back to the house at {1,4} with total distance of sqrt(5)+sqrt(8)+sqrt(2)+sqrt(2)+sqrt(17) = 12.0160.</p>
+<p><strong>Example 2:</strong></p>
+<blockquote>
+<p><strong>input1:</strong> 4<br>
+<strong>input2:</strong> 1<br>
+<strong>input3:</strong> {{3,5},{7,5},{7,3},{8,4}}<br>
+<strong>input4:</strong> {{7,7}}<br>
+<strong>input5:</strong> {5,5}<br>
+<strong>input6:</strong> 22</p>
+</blockquote>
+<blockquote>
+<p><strong>Output:</strong> 3</p>
+</blockquote>
+<p><strong>Explanation:</strong><br>
+Four flowers and 1 honeycomb present. The maximum flowers the honeybee would ba able to travel to would be 3 with a total distance of 19.6251. Hence, the answer is 1.</p>
+
+    </body>
+    </html>

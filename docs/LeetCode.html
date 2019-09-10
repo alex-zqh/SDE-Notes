@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <p><a href="https://leetcode.com/problems/two-sum/">1. Two Sum (Easy)</a></p>
+<ol>
+<li>暴力双循环 i-&gt;(0~n-1)，j-&gt;(i+1~n-1)，O(n×(n−1))≈O(n^2 )</li>
+<li>使用map循环一次  i-&gt;(0~n-1) target-nums[i] 是否在map key中 不在存入(nums[i],i) 在返回{map.get差值，i}</li>
+</ol>
+<p><a href="https://leetcode.com/problems/add-two-numbers/">2. Add Two Numbers (Medium)</a><br>
+结果链表头设0<br>
+中间链表=结果链表头<br>
+加法器实现，每位输出用中间链表链表存，进位用int存储<br>
+不为Null取value，为Null设为0，和加上进位，输出取除10余，进位除10（链表先设置next，然后等于next）<br>
+不为Null的取next<br>
+返回结果链表的next</p>
+<p><a href="https://leetcode.com/problems/valid-parentheses/">20. Valie Parentheses (Easy)</a></p>
+<ol>
+<li>字典右对左，存左比较左</li>
+<li>字典左对右，存右比较右</li>
+</ol>
+<p><a href="https://leetcode.com/problems/minimum-path-sum/">64. Minium Path Sum (Medium)</a></p>
+<pre><code class="language-html"><div>Input:
+[
+  [1,3,1],
+  [1,5,1],
+  [4,2,1]
+]
+Output: 7
+Explanation: Because the path 1→3→1→1→1 minimizes the sum.
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_64</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minPathSum</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+        <span class="hljs-keyword">int</span> m = grid.length;
+        <span class="hljs-keyword">int</span> n = grid[<span class="hljs-number">0</span>].length;
+        <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m][n];
+        <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>,j=<span class="hljs-number">0</span>;
+        dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = grid[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];
+        <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;n;j++){
+            dp[<span class="hljs-number">0</span>][j] = dp[<span class="hljs-number">0</span>][j-<span class="hljs-number">1</span>]+grid[<span class="hljs-number">0</span>][j];
+        }
+        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;m;i++){
+            dp[i][<span class="hljs-number">0</span>] = dp[i-<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]+grid[i][<span class="hljs-number">0</span>];
+        }
+        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;m;i++){
+            <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;n;j++){
+                dp[i][j] = Math.min(dp[i-<span class="hljs-number">1</span>][j],dp[i][j-<span class="hljs-number">1</span>])+grid[i][j];
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[m-<span class="hljs-number">1</span>][n-<span class="hljs-number">1</span>];
+    }
+}
+</div></code></pre>
+<p><a href="https://leetcode.com/problems/edit-distance/">72. Edit Distance (Medium)</a></p>
+<pre><code class="language-html"><div>Input: word1 = "horse", word2 = "ros"
+Output: 3
+Explanation: 
+horse -&gt; rorse (replace 'h' with 'r')
+rorse -&gt; rose (remove 'r')
+rose -&gt; ros (remove 'e')
+</div></code></pre>
+<pre><code class="language-html"><div>Input: word1 = "intention", word2 = "execution"
+Output: 5
+Explanation: 
+intention -&gt; inention (remove 't')
+inention -&gt; enention (replace 'i' with 'e')
+enention -&gt; exention (replace 'n' with 'x')
+exention -&gt; exection (replace 'n' with 'c')
+exection -&gt; execution (insert 'u')
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_72</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(String word1, String word2)</span> </span>{
+        <span class="hljs-keyword">int</span> m = word1.length();
+        <span class="hljs-keyword">int</span> n = word2.length();
+        <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m+<span class="hljs-number">1</span>][n+<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>,j=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;=m;i++){
+            dp[i][<span class="hljs-number">0</span>] = i;
+        }
+        <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;i&lt;=n;j++){
+            dp[<span class="hljs-number">0</span>][j] = j;
+        }
+        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;=m;i++){
+            <span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;=n;j++){
+                <span class="hljs-keyword">if</span>(word1.charAt(i-<span class="hljs-number">1</span>) == word2.charAt(j-<span class="hljs-number">1</span>)){
+                    dp[i][j] = dp[i-<span class="hljs-number">1</span>][j]+dp[i][j-<span class="hljs-number">1</span>];
+                }
+                <span class="hljs-keyword">else</span>{
+                    <span class="hljs-keyword">int</span> delete = dp[i-<span class="hljs-number">1</span>][j]+<span class="hljs-number">1</span>;
+                    <span class="hljs-keyword">int</span> insert = dp[i][j-<span class="hljs-number">1</span>]+<span class="hljs-number">1</span>;
+                    <span class="hljs-keyword">int</span> replace = dp[i-<span class="hljs-number">1</span>][j-<span class="hljs-number">1</span>]+<span class="hljs-number">1</span>;
+                    <span class="hljs-keyword">int</span> min = Math.min(delete,insert);
+                    dp[i][j] = Math.min(min,replace);
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[m][n];
+    }
+}
+</div></code></pre>
+<p><a href="https://leetcode.com/problems/maximum-product-subarray/">152. Maximum Product Subarray</a></p>
+<pre><code class="language-html"><div>Input: [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+</div></code></pre>
+<pre><code class="language-html"><div>Input: [-2,0,-1]
+Output: 0
+Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_152</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProduct</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+        <span class="hljs-keyword">int</span> dp = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> i,maxm,minm;
+        dp = maxm = minm = nums[<span class="hljs-number">0</span>];
+        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;nums.length;i++){
+            <span class="hljs-keyword">if</span>(nums[i]&gt;=<span class="hljs-number">0</span>){
+               maxm = Math.max(maxm*nums[i],nums[i]);
+               minm = Math.min(minm*nums[i],nums[i]);
+            }
+            <span class="hljs-keyword">else</span>{
+                <span class="hljs-keyword">int</span> tmp;
+                tmp = maxm;
+                maxm = Math.max(minm*nums[i],nums[i]);
+                minm = Math.min(maxm*nums[i],nums[i]);
+            }
+            dp = Math.max(dp,maxm);
+        }
+        <span class="hljs-keyword">return</span> dp;
+    }
+}
+</div></code></pre>
+<p><a href="https://leetcode.com/problems/longest-increasing-subsequence/">300. Longest Increasing Subsequence</a></p>
+<pre><code class="language-html"><div>Input: [10,9,2,5,3,7,101,18]
+Output: 4 
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. 
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_300</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums,<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">if</span>(nums == <span class="hljs-keyword">null</span> || n ==<span class="hljs-number">0</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> max = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">int</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++){
+            dp[i] = <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;i;j++){
+                <span class="hljs-keyword">if</span>(nums[i] &gt; nums[j] &amp;&amp; dp[i]&lt;dp[j]+<span class="hljs-number">1</span>){
+                    dp[i] = dp[j]+<span class="hljs-number">1</span>;
+                }
+            }
+            <span class="hljs-keyword">if</span>(dp[i] &gt; max){
+                max = dp[i];
+            }
+        }
+        <span class="hljs-keyword">return</span> max;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] findLIS(<span class="hljs-keyword">int</span>[] nums,<span class="hljs-keyword">int</span> n){
+        ArrayList&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">int</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+        <span class="hljs-keyword">int</span> max = <span class="hljs-number">1</span>;
+        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++) {
+            ArrayList&lt;Integer&gt; now = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            dp[i] = <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+                <span class="hljs-keyword">if</span> (nums[j] &lt; nums[i] &amp;&amp; dp[i] &lt; dp[j] + <span class="hljs-number">1</span>) {
+                    dp[i] = dp[j] + <span class="hljs-number">1</span>;
+                    now.add(nums[j]);
+                }
+            }
+            now.add(nums[i]);
+            <span class="hljs-keyword">if</span>(dp[i]&gt;max){
+                list = now;
+            }
+        }
+        <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[list.size()];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;list.size();i++){
+            res[i] = list.get(i);
+            System.out.print(res[i]+<span class="hljs-string">" "</span>);
+        }
+        System.out.println();
+        <span class="hljs-keyword">return</span> res;
+    }
+}
+</div></code></pre>
+<p><a href="https://leetcode.com/problems/decode-string/">394. Decode String (Medium)</a></p>
+<pre><code class="language-html"><div>s = "3[a]2[bc]", return "aaabcbc".
+s = "3[a2[c]]", return "accaccacc".
+s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
+</div></code></pre>
+<pre><code class="language-java"><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_394</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">decodeString</span><span class="hljs-params">(String s)</span></span>{
+        Stack&lt;Character&gt; stack = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+        StringBuilder res = <span class="hljs-keyword">new</span>  StringBuilder();
+        StringBuilder repeat;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> c:s.toCharArray()){
+            <span class="hljs-keyword">if</span>(c == <span class="hljs-string">']'</span>){
+                repeat = <span class="hljs-keyword">new</span> StringBuilder();
+                <span class="hljs-keyword">while</span>(stack.peek() != <span class="hljs-string">'['</span>){
+                   repeat.append(stack.pop());
+                }
+                stack.pop();
+                StringBuilder count = <span class="hljs-keyword">new</span> StringBuilder();
+                <span class="hljs-keyword">while</span> (!stack.isEmpty() &amp;&amp; (stack.peek() &gt;= <span class="hljs-string">'0'</span> &amp;&amp; stack.peek() &lt;= <span class="hljs-string">'9'</span>)) {
+                    count.append(stack.pop());
+                }
+                Integer num = Integer.parseInt(count.reverse().toString());
+                String str = repeat.reverse().toString();
+                String strs = <span class="hljs-string">""</span>;
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;num;i++){
+                    strs+=str;
+                }
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> ch:strs.toCharArray()){
+                    stack.push(ch);
+                }
+            }<span class="hljs-keyword">else</span>{
+                stack.push(c);
+            }
+        }
+        <span class="hljs-keyword">while</span>(!stack.isEmpty()){
+            res.append(stack.pop());
+        }
+        <span class="hljs-keyword">return</span> res.reverse().toString();
+    }
+}
+</div></code></pre>
+
+    </body>
+    </html>

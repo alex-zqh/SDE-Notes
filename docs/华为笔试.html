@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>**题目 # 1**</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h1 id="%E9%A2%98%E7%9B%AE--1"><strong>题目 # 1</strong></h1>
+<h2 id="%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><strong>题目描述</strong></h2>
+<p>连续输入字符串(输入字符串个数为N，每个字符串长度不大于100，输入字符串建按照空格键分隔)，请按照长度为8拆分每个字符串后输出到新的字符串数组，输出的字符串按照升序排列。<br>
+长度不是8整数倍的字符串请在后面补数字0，空字符不处理。</p>
+<p><strong>输入描述：</strong></p>
+<blockquote>
+<p>输入内容：2 abc 123456789</p>
+<p>输入说明:<br>
+1.<br>
+输入两个字符串（以空格分隔），其中一个为abc，另一个为123456789</p>
+</blockquote>
+<p><strong>输出描述：</strong></p>
+<blockquote>
+<p>输出结果：12345678 90000000 abc00000</p>
+<p>输出说明<br>
+1.<br>
+abc字符串需要在后边补零，123456789拆分为12345678与90000000，所有的字符串需要升序排列后输出（以空格分隔）；<br>
+2.<br>
+输出字符串中的重复字符串不能删除。</p>
+</blockquote>
+<p><strong>示例1</strong></p>
+<blockquote>
+<p>输入<br>
+2 abc 123456789<br>
+输出<br>
+12345678 900000 abc00000</p>
+</blockquote>
+<pre><code class="language-java"><div><span class="hljs-keyword">import</span> java.util.*;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_1</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Scanner sc = <span class="hljs-keyword">new</span> Scanner(System.in);
+        <span class="hljs-keyword">int</span> n = Integer.parseInt(sc.next());
+        String[] init = <span class="hljs-keyword">new</span> String[n];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            init[i] = sc.next();
+        }
+        ArrayList&lt;String&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">for</span>(String s:init){
+            <span class="hljs-keyword">if</span>(s.length() == <span class="hljs-number">0</span>){
+                <span class="hljs-keyword">continue</span>;
+            }
+            <span class="hljs-keyword">if</span> (s.length()%<span class="hljs-number">8</span> == <span class="hljs-number">0</span>){
+                <span class="hljs-keyword">int</span> num = s.length()/<span class="hljs-number">8</span>;
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;num;i++){
+                    res.add(s.substring(<span class="hljs-number">8</span>*i,<span class="hljs-number">8</span>*i+<span class="hljs-number">8</span>));
+                }
+            }
+            <span class="hljs-keyword">if</span>(s.length()%<span class="hljs-number">8</span> != <span class="hljs-number">0</span>){
+                <span class="hljs-keyword">int</span> num = s.length()/<span class="hljs-number">8</span>;
+                <span class="hljs-keyword">int</span> rul = s.length()%<span class="hljs-number">8</span>;
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">8</span>-rul;i++){
+                    s+=<span class="hljs-string">'0'</span>;
+                    <span class="hljs-comment">//System.out.println(s);</span>
+                }
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;num+<span class="hljs-number">1</span>;i++){
+                    res.add(s.substring(<span class="hljs-number">8</span>*i,<span class="hljs-number">8</span>*i+<span class="hljs-number">8</span>));
+                }
+            }
+        }
+        Collections.sort(res);
+        StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();
+        <span class="hljs-keyword">for</span>(String s:res){
+            sb.append(s);
+            sb.append(<span class="hljs-string">" "</span>);
+        }
+        System.out.print(sb.toString());
+    }
+}
+</div></code></pre>
+<h1 id="%E9%A2%98%E7%9B%AE--2"><strong>题目 # 2</strong></h1>
+<h2 id="%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><strong>题目描述</strong></h2>
+<p>给定一个字符串，字符串包含数字、大小写字母以及括号（包括大括号、中括号和小括号）。括号可以嵌套，即括号里面可以出现数字和括号。<br>
+按照如下的规则对字符串进行展开，不需要考虑括号成对不匹配问题，用例保证括号匹配，同时用例保证每个数字后面都有括号，不用考虑数字后面没有括号的这种情况，即2a2(b)这种情况不用考虑。</p>
+<ol>
+<li> 数字表示括号里的字符串重复的次数，展开后的字符串不包含括号。</li>
+<li> 将字符串进行逆序展开。</li>
+</ol>
+<p>输出最终展开的字符串。</p>
+<p><strong>输入描述：</strong></p>
+<blockquote>
+<p>输入一个长度小于100的字符串。</p>
+</blockquote>
+<p><strong>输出描述：</strong></p>
+<blockquote>
+<p>输出展开后的字符串。</p>
+</blockquote>
+<p><strong>示例1</strong></p>
+<blockquote>
+<p>输入<br>
+abc3 (A)<br>
+输出<br>
+AAAcba</p>
+</blockquote>
+<pre><code class="language-java"><div><span class="hljs-keyword">import</span> java.util.*;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_2</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Scanner sc = <span class="hljs-keyword">new</span> Scanner(System.in);
+        String input = sc.next();
+        System.out.print(translate(input));
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">static</span> String <span class="hljs-title">translate</span><span class="hljs-params">(String s)</span> </span>{
+        Stack&lt;Character&gt; stack = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+        StringBuilder repeat;
+        StringBuilder res = <span class="hljs-keyword">new</span> StringBuilder();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+            <span class="hljs-keyword">if</span> (c == <span class="hljs-string">']'</span> || c == <span class="hljs-string">'}'</span> || c == <span class="hljs-string">')'</span>) {
+                repeat = <span class="hljs-keyword">new</span> StringBuilder();
+                <span class="hljs-keyword">while</span> (stack.peek() != <span class="hljs-string">'['</span> &amp;&amp; stack.peek() != <span class="hljs-string">'{'</span> &amp;&amp; stack.peek() != <span class="hljs-string">'('</span>) {
+                    repeat.append(stack.pop());
+                }
+                stack.pop();
+                StringBuilder count = <span class="hljs-keyword">new</span> StringBuilder();
+                <span class="hljs-keyword">while</span> (!stack.isEmpty() &amp;&amp; (stack.peek() &gt;= <span class="hljs-string">'0'</span> &amp;&amp; stack.peek() &lt;= <span class="hljs-string">'9'</span>)) {
+                    count.append(stack.pop());
+                }
+                Integer num = Integer.valueOf(count.reverse().toString());
+                String str = repeat.reverse().toString();
+                String strs = <span class="hljs-string">""</span>;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; num; i++) {
+                    strs += str;
+                }
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> charA : strs.toCharArray()) {
+                    stack.push(charA);
+                }
+            } <span class="hljs-keyword">else</span> {
+                stack.push(c);
+            }
+        }
+
+        <span class="hljs-keyword">while</span> (!stack.isEmpty()) {
+            res.append(stack.pop());
+        }
+        <span class="hljs-keyword">return</span> res.toString();
+    }
+}
+</div></code></pre>
+<h1 id="%E9%A2%98%E7%9B%AE--3"><strong>题目 # 3</strong></h1>
+<h2 id="%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2"><strong>题目描述</strong></h2>
+<p>一张N×M的地图上每个店的海拔高度不同；从当前点只能访问上、下、左、右四个点中还没有到达过的点，且下一步选择的点的海拔高度必须高于当前点；求从地图中的点A到点B总的路径条数除以10<sup>9</sup>的余数。地图左上角标为(0,0),右下角坐标为(N-1,M-1)。</p>
+<p><strong>输入描述：</strong></p>
+<blockquote>
+<p>每一行输入两个整数N,M（0&lt;N≤600, 0&lt;M≤600）用空格隔开；接下来N行输入，每行M个整数用空格隔开，代表对应位置的海拔高度（0≤海拔高度≤36000）；最后一行四个证书X,Y,Z,W；前两个代表A的坐标为（X,Y）；后两个代表B的坐标为（Z,W）；输入保证A、B坐标不同，且坐标合法</p>
+</blockquote>
+<p><strong>输出描述：</strong></p>
+<blockquote>
+<p>输出一个整数并换行，整数表示A到B总的路径条数除以10<sup>9</sup>的余数</p>
+</blockquote>
+<p><strong>示例1</strong></p>
+<blockquote>
+<p>输入<br>
+4 5<br>
+0 1 0 0 0<br>
+0 2 3 0 0<br>
+0 0 4 5 0<br>
+0 0 7 6 0<br>
+0 1 3 2<br>
+输出<br>
+2</p>
+</blockquote>
+<pre><code class="language-java"><div><span class="hljs-keyword">import</span> java.util.*;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution_3</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Scanner sc = <span class="hljs-keyword">new</span> Scanner(System.in);
+        <span class="hljs-keyword">int</span> n = sc.nextInt();
+        <span class="hljs-keyword">int</span> m = sc.nextInt();
+        <span class="hljs-keyword">int</span>[][] height = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n][m];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;m;j++){
+                height[i][j] = sc.nextInt();
+            }
+        }
+        <span class="hljs-keyword">int</span> s_x = sc.nextInt();<span class="hljs-keyword">int</span> s_y = sc.nextInt();<span class="hljs-keyword">int</span> t_x = sc.nextInt();<span class="hljs-keyword">int</span> t_y = sc.nextInt();
+       <span class="hljs-keyword">int</span> res=findway(height,s_x,s_y,t_x,t_y,n,m);
+        System.out.println(res%<span class="hljs-number">10</span>);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findway</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][]h,<span class="hljs-keyword">int</span> start_x,<span class="hljs-keyword">int</span> start_y,<span class="hljs-keyword">int</span> tar_x,<span class="hljs-keyword">int</span> tar_y,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> m)</span></span>{
+        <span class="hljs-keyword">if</span> (start_x==tar_x &amp;&amp; start_y==tar_y)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">int</span> cur_h = h[start_x][start_y];
+        <span class="hljs-keyword">int</span> tar_h = h[tar_x][tar_y];
+        <span class="hljs-keyword">if</span> (cur_h &gt;= tar_h)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> ways = <span class="hljs-number">0</span>;
+	<span class="hljs-comment">// 向上回退</span>
+        <span class="hljs-keyword">if</span> (tar_x &gt;= <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">if</span> (tar_h &gt; h[tar_x - <span class="hljs-number">1</span>][tar_y])
+                ways += findway(h, start_x, start_y, tar_x - <span class="hljs-number">1</span>, tar_y,n,m);
+        }
+	<span class="hljs-comment">// 向下回退</span>
+        <span class="hljs-keyword">if</span> (tar_x &lt;= n-<span class="hljs-number">2</span>) {
+            <span class="hljs-keyword">if</span> (tar_h &gt; h[tar_x + <span class="hljs-number">1</span>][tar_y])
+                ways += findway(h, start_x, start_y, tar_x + <span class="hljs-number">1</span>, tar_y,n,m);
+        }
+	<span class="hljs-comment">// 向左回退</span>
+        <span class="hljs-keyword">if</span> (tar_y &gt;= <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">if</span> (tar_h &gt; h[tar_x][tar_y - <span class="hljs-number">1</span>])
+                ways += findway(h, start_x, start_y, tar_x, tar_y - <span class="hljs-number">1</span>, n, m);
+        }
+	<span class="hljs-comment">// 向右回退</span>
+        <span class="hljs-keyword">if</span> (tar_y &lt;= m-<span class="hljs-number">2</span>) {
+            <span class="hljs-keyword">if</span> (tar_h &gt; h[tar_x][tar_y + <span class="hljs-number">1</span>])
+                ways += findway(h, start_x, start_y, tar_x, tar_y + <span class="hljs-number">1</span>, n, m);
+        }
+        <span class="hljs-keyword">return</span> ways;
+    }
+}
+</div></code></pre>
+<pre><code class="language-python"><div>n,m = map(int, input().split())
+
+height = []
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n):
+	data = list(map(int, input().split()))
+	height.append(data)
+
+s_x,s_y,t_x,t_y = map(int, input().split())
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">way_</span><span class="hljs-params">(h, start_x, start_y, tar_x, tar_y)</span>:</span>
+	<span class="hljs-keyword">if</span> start_x==tar_x <span class="hljs-keyword">and</span> start_y==tar_y:
+		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+	cur_h = h[start_x][start_y]
+	tar_h = h[tar_x][tar_y]
+	<span class="hljs-keyword">if</span> cur_h &gt;= tar_h:
+		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+	ways = <span class="hljs-number">0</span>
+	<span class="hljs-comment"># 向上回退</span>
+	<span class="hljs-keyword">if</span> tar_x &gt;= <span class="hljs-number">1</span>:
+		<span class="hljs-keyword">if</span> tar_h &gt; h[tar_x<span class="hljs-number">-1</span>][tar_y]:
+			ways += way_(h, start_x, start_y, tar_x<span class="hljs-number">-1</span>, tar_y)
+	<span class="hljs-comment"># 向下回退</span>
+	<span class="hljs-keyword">if</span> tar_x &lt;= n<span class="hljs-number">-2</span>:
+		<span class="hljs-keyword">if</span> tar_h &gt; h[tar_x+<span class="hljs-number">1</span>][tar_y]:
+			ways += way_(h, start_x, start_y, tar_x+<span class="hljs-number">1</span>, tar_y)
+	<span class="hljs-comment"># 向左回退</span>
+	<span class="hljs-keyword">if</span> tar_y &gt;= <span class="hljs-number">1</span>:
+		<span class="hljs-keyword">if</span> tar_h &gt; h[tar_x][tar_y<span class="hljs-number">-1</span>]:
+			ways += way_(h, start_x, start_y, tar_x, tar_y<span class="hljs-number">-1</span>)
+	<span class="hljs-comment"># 向右回退</span>
+	<span class="hljs-keyword">if</span> tar_y &lt;= m<span class="hljs-number">-2</span>:
+		<span class="hljs-keyword">if</span> tar_h &gt; h[tar_x][tar_y+<span class="hljs-number">1</span>]:
+			ways += way_(h, start_x, start_y, tar_x, tar_y+<span class="hljs-number">1</span>)
+	<span class="hljs-keyword">return</span> ways
+res = way_(height, s_x,s_y,t_x,t_y)%(<span class="hljs-number">10</span>**<span class="hljs-number">9</span>)
+print(res)
+</div></code></pre>
+
+    </body>
+    </html>
